@@ -37,6 +37,7 @@ Thumbs.db
 # Jupyter
 .ipynb_checkpoints/
 
-# Backup files
+# Backup and offline files
 *.bak
 *.backup
+README_offline.md
