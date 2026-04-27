@@ -1,0 +1,6 @@
+@echo off
+echo Activating molgen environment...
+call conda activate molgen
+echo Running MolGenPlus...
+python MolGenPlus_Main.py
+pause

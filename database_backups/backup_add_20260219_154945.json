@@ -1,0 +1,58 @@
+{
+  "version": "1.0",
+  "created_date": "2026-02-19T15:48:43.149219",
+  "last_updated": "2026-02-19T15:49:28.776422",
+  "categories": {
+    "user_added": [],
+    "predefined": [],
+    "favorites": [],
+    "ai_generated": [
+      {
+        "id": "mol_20260219_154900_0_0",
+        "name": "C2H4O2_异构体_1",
+        "smiles": "OCC=O",
+        "formula": "C2H4O2",
+        "molecular_weight": 60.021129368000004,
+        "carbon_count": 2,
+        "hydrogen_count": 4,
+        "oxygen_count": 2,
+        "description": "由 deepseek AI 生成的C2H4O2异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C2H4O2"
+        ],
+        "created_date": "2026-02-19T15:49:00.414157",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_154928_1_0",
+        "name": "C3H6O2_异构体_2",
+        "smiles": "CC(=O)OC",
+        "formula": "C3H6O2",
+        "molecular_weight": 74.036779432,
+        "carbon_count": 3,
+        "hydrogen_count": 6,
+        "oxygen_count": 2,
+        "description": "由 deepseek AI 生成的C3H6O2异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C3H6O2"
+        ],
+        "created_date": "2026-02-19T15:49:28.776416",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      }
+    ],
+    "ai_verified": []
+  },
+  "total_count": 2
+}

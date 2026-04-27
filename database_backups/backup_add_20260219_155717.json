@@ -1,0 +1,1336 @@
+{
+  "version": "1.0",
+  "created_date": "2026-02-09T10:28:06.677371",
+  "last_updated": "2026-02-19T15:52:55.042555",
+  "categories": {
+    "user_added": [],
+    "predefined": [
+      {
+        "id": "mol_20260209_102807_0",
+        "name": "乙烷",
+        "smiles": "CC",
+        "formula": "C2H6",
+        "molecular_weight": 30.046950192,
+        "carbon_count": 2,
+        "hydrogen_count": 6,
+        "oxygen_count": 0,
+        "description": "最简单的烷烃分子",
+        "category": "predefined",
+        "tags": [
+          "烷烃",
+          "有机化学"
+        ],
+        "created_date": "2026-02-09T10:28:07.719336",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_1",
+        "name": "丙烷",
+        "smiles": "CCC",
+        "formula": "C3H8",
+        "molecular_weight": 44.062600255999996,
+        "carbon_count": 3,
+        "hydrogen_count": 8,
+        "oxygen_count": 0,
+        "description": "三碳烷烃",
+        "category": "predefined",
+        "tags": [
+          "烷烃"
+        ],
+        "created_date": "2026-02-09T10:28:07.719336",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_2",
+        "name": "丁烷",
+        "smiles": "CCCC",
+        "formula": "C4H10",
+        "molecular_weight": 58.078250319999995,
+        "carbon_count": 4,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "四碳烷烃，有正丁烷和异丁烷两种异构体",
+        "category": "predefined",
+        "tags": [
+          "烷烃",
+          "异构体"
+        ],
+        "created_date": "2026-02-09T10:28:07.721835",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_3",
+        "name": "己烷",
+        "smiles": "CCCCCC",
+        "formula": "C6H14",
+        "molecular_weight": 86.109550448,
+        "carbon_count": 6,
+        "hydrogen_count": 14,
+        "oxygen_count": 0,
+        "description": "六碳烷烃",
+        "category": "predefined",
+        "tags": [
+          "烷烃"
+        ],
+        "created_date": "2026-02-09T10:28:07.723141",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_4",
+        "name": "辛烷",
+        "smiles": "CCCCCCCC",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "八碳烷烃，汽油的参考标准",
+        "category": "predefined",
+        "tags": [
+          "烷烃",
+          "燃料"
+        ],
+        "created_date": "2026-02-09T10:28:07.724148",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_5",
+        "name": "乙烯",
+        "smiles": "C=C",
+        "formula": "C2H4",
+        "molecular_weight": 28.031300127999998,
+        "carbon_count": 2,
+        "hydrogen_count": 4,
+        "oxygen_count": 0,
+        "description": "最简单的烯烃，植物激素",
+        "category": "predefined",
+        "tags": [
+          "烯烃",
+          "植物激素"
+        ],
+        "created_date": "2026-02-09T10:28:07.724846",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_6",
+        "name": "丙烯",
+        "smiles": "CC=C",
+        "formula": "C3H6",
+        "molecular_weight": 42.046950192,
+        "carbon_count": 3,
+        "hydrogen_count": 6,
+        "oxygen_count": 0,
+        "description": "三碳烯烃",
+        "category": "predefined",
+        "tags": [
+          "烯烃"
+        ],
+        "created_date": "2026-02-09T10:28:07.725896",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_7",
+        "name": "1-丙烯",
+        "smiles": "C=CC",
+        "formula": "C3H6",
+        "molecular_weight": 42.046950192,
+        "carbon_count": 3,
+        "hydrogen_count": 6,
+        "oxygen_count": 0,
+        "description": "丙烯的1号位置双键",
+        "category": "predefined",
+        "tags": [
+          "烯烃"
+        ],
+        "created_date": "2026-02-09T10:28:07.726895",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_8",
+        "name": "1-戊烯",
+        "smiles": "C=CCCC",
+        "formula": "C5H10",
+        "molecular_weight": 70.07825032,
+        "carbon_count": 5,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "五碳单烯烃",
+        "category": "predefined",
+        "tags": [
+          "烯烃"
+        ],
+        "created_date": "2026-02-09T10:28:07.727895",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_9",
+        "name": "乙炔",
+        "smiles": "C#C",
+        "formula": "C2H2",
+        "molecular_weight": 26.015650064,
+        "carbon_count": 2,
+        "hydrogen_count": 2,
+        "oxygen_count": 0,
+        "description": "最简单的炔烃",
+        "category": "predefined",
+        "tags": [
+          "炔烃"
+        ],
+        "created_date": "2026-02-09T10:28:07.728896",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_10",
+        "name": "丙炔",
+        "smiles": "CC#C",
+        "formula": "C3H4",
+        "molecular_weight": 40.031300128,
+        "carbon_count": 3,
+        "hydrogen_count": 4,
+        "oxygen_count": 0,
+        "description": "三碳炔烃",
+        "category": "predefined",
+        "tags": [
+          "炔烃"
+        ],
+        "created_date": "2026-02-09T10:28:07.730253",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_11",
+        "name": "1-戊炔",
+        "smiles": "C#CCCC",
+        "formula": "C5H8",
+        "molecular_weight": 68.062600256,
+        "carbon_count": 5,
+        "hydrogen_count": 8,
+        "oxygen_count": 0,
+        "description": "五碳炔烃",
+        "category": "predefined",
+        "tags": [
+          "炔烃"
+        ],
+        "created_date": "2026-02-09T10:28:07.731287",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_12",
+        "name": "苯",
+        "smiles": "c1ccccc1",
+        "formula": "C6H6",
+        "molecular_weight": 78.046950192,
+        "carbon_count": 6,
+        "hydrogen_count": 6,
+        "oxygen_count": 0,
+        "description": "最简单的芳香烃，平面六元环",
+        "category": "predefined",
+        "tags": [
+          "芳香烃",
+          "苯环"
+        ],
+        "created_date": "2026-02-09T10:28:07.732606",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_13",
+        "name": "甲苯",
+        "smiles": "c1ccc(cc1)C",
+        "formula": "C7H8",
+        "molecular_weight": 92.062600256,
+        "carbon_count": 7,
+        "hydrogen_count": 8,
+        "oxygen_count": 0,
+        "description": "苯环上连接甲基",
+        "category": "predefined",
+        "tags": [
+          "芳香烃",
+          "取代苯"
+        ],
+        "created_date": "2026-02-09T10:28:07.732606",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_14",
+        "name": "乙苯",
+        "smiles": "c1ccc(cc1)CC",
+        "formula": "C8H10",
+        "molecular_weight": 106.07825032,
+        "carbon_count": 8,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "苯环上连接乙基",
+        "category": "predefined",
+        "tags": [
+          "芳香烃",
+          "取代苯"
+        ],
+        "created_date": "2026-02-09T10:28:07.732606",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_15",
+        "name": "异丙苯",
+        "smiles": "c1ccc(cc1)C(C)C",
+        "formula": "C9H12",
+        "molecular_weight": 120.093900384,
+        "carbon_count": 9,
+        "hydrogen_count": 12,
+        "oxygen_count": 0,
+        "description": "苯环上连接异丙基",
+        "category": "predefined",
+        "tags": [
+          "芳香烃",
+          "取代苯"
+        ],
+        "created_date": "2026-02-09T10:28:07.736537",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_16",
+        "name": "叔丁苯",
+        "smiles": "c1ccc(cc1)C(C)(C)C",
+        "formula": "C10H14",
+        "molecular_weight": 134.109550448,
+        "carbon_count": 10,
+        "hydrogen_count": 14,
+        "oxygen_count": 0,
+        "description": "苯环上连接叔丁基",
+        "category": "predefined",
+        "tags": [
+          "芳香烃",
+          "取代苯"
+        ],
+        "created_date": "2026-02-09T10:28:07.736537",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_17",
+        "name": "萘",
+        "smiles": "c1ccc2c(c1)cccc2",
+        "formula": "C10H8",
+        "molecular_weight": 128.062600256,
+        "carbon_count": 10,
+        "hydrogen_count": 8,
+        "oxygen_count": 0,
+        "description": "双环芳香烃",
+        "category": "predefined",
+        "tags": [
+          "芳香烃",
+          "多环"
+        ],
+        "created_date": "2026-02-09T10:28:07.736537",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_18",
+        "name": "蒽",
+        "smiles": "c1ccc2c(c1)ccc3c2cccc3",
+        "formula": "C14H10",
+        "molecular_weight": 178.07825032,
+        "carbon_count": 14,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "三环芳香烃",
+        "category": "predefined",
+        "tags": [
+          "芳香烃",
+          "多环"
+        ],
+        "created_date": "2026-02-09T10:28:07.739297",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_19",
+        "name": "甲醇",
+        "smiles": "CO",
+        "formula": "CH4O",
+        "molecular_weight": 32.026214748,
+        "carbon_count": 1,
+        "hydrogen_count": 4,
+        "oxygen_count": 1,
+        "description": "最简单的醇类",
+        "category": "predefined",
+        "tags": [
+          "醇",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.739297",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_20",
+        "name": "乙醇",
+        "smiles": "CCO",
+        "formula": "C2H6O",
+        "molecular_weight": 46.041864812,
+        "carbon_count": 2,
+        "hydrogen_count": 6,
+        "oxygen_count": 1,
+        "description": "酒精的主要成分",
+        "category": "predefined",
+        "tags": [
+          "醇",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.739297",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_21",
+        "name": "异丙醇",
+        "smiles": "CC(C)O",
+        "formula": "C3H8O",
+        "molecular_weight": 60.057514876,
+        "carbon_count": 3,
+        "hydrogen_count": 8,
+        "oxygen_count": 1,
+        "description": "消毒酒精",
+        "category": "predefined",
+        "tags": [
+          "醇",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.743074",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_22",
+        "name": "正丁醇",
+        "smiles": "CCCCO",
+        "formula": "C4H10O",
+        "molecular_weight": 74.07316494,
+        "carbon_count": 4,
+        "hydrogen_count": 10,
+        "oxygen_count": 1,
+        "description": "四碳醇",
+        "category": "predefined",
+        "tags": [
+          "醇",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.744128",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_23",
+        "name": "苯酚",
+        "smiles": "c1ccc(cc1)O",
+        "formula": "C6H6O",
+        "molecular_weight": 94.041864812,
+        "carbon_count": 6,
+        "hydrogen_count": 6,
+        "oxygen_count": 1,
+        "description": "芳香醇",
+        "category": "predefined",
+        "tags": [
+          "醇",
+          "芳香烃",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.745122",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_24",
+        "name": "甲醛",
+        "smiles": "C=O",
+        "formula": "CH2O",
+        "molecular_weight": 30.010564684,
+        "carbon_count": 1,
+        "hydrogen_count": 2,
+        "oxygen_count": 1,
+        "description": "最简单的醛类",
+        "category": "predefined",
+        "tags": [
+          "醛",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.746122",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_25",
+        "name": "乙醛",
+        "smiles": "CC=O",
+        "formula": "C2H4O",
+        "molecular_weight": 44.026214748,
+        "carbon_count": 2,
+        "hydrogen_count": 4,
+        "oxygen_count": 1,
+        "description": "二碳醛",
+        "category": "predefined",
+        "tags": [
+          "醛",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.747122",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_26",
+        "name": "丙醛",
+        "smiles": "CCC=O",
+        "formula": "C3H6O",
+        "molecular_weight": 58.041864812,
+        "carbon_count": 3,
+        "hydrogen_count": 6,
+        "oxygen_count": 1,
+        "description": "三碳醛",
+        "category": "predefined",
+        "tags": [
+          "醛",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.749121",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_27",
+        "name": "苯甲醛",
+        "smiles": "c1ccc(cc1)C=O",
+        "formula": "C7H6O",
+        "molecular_weight": 106.041864812,
+        "carbon_count": 7,
+        "hydrogen_count": 6,
+        "oxygen_count": 1,
+        "description": "芳香醛",
+        "category": "predefined",
+        "tags": [
+          "醛",
+          "芳香烃",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.750122",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_28",
+        "name": "丙酮",
+        "smiles": "CC(=O)C",
+        "formula": "C3H6O",
+        "molecular_weight": 58.041864812,
+        "carbon_count": 3,
+        "hydrogen_count": 6,
+        "oxygen_count": 1,
+        "description": "最简单的酮类，常用溶剂",
+        "category": "predefined",
+        "tags": [
+          "酮",
+          "含氧有机物",
+          "溶剂"
+        ],
+        "created_date": "2026-02-09T10:28:07.752143",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_29",
+        "name": "丁酮",
+        "smiles": "CC(=O)CC",
+        "formula": "C4H8O",
+        "molecular_weight": 72.057514876,
+        "carbon_count": 4,
+        "hydrogen_count": 8,
+        "oxygen_count": 1,
+        "description": "四碳酮",
+        "category": "predefined",
+        "tags": [
+          "酮",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.753191",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_30",
+        "name": "戊酮",
+        "smiles": "CC(=O)CCC",
+        "formula": "C5H10O",
+        "molecular_weight": 86.07316494,
+        "carbon_count": 5,
+        "hydrogen_count": 10,
+        "oxygen_count": 1,
+        "description": "五碳酮",
+        "category": "predefined",
+        "tags": [
+          "酮",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.755179",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_31",
+        "name": "苯乙酮",
+        "smiles": "c1ccc(cc1)C(=O)C",
+        "formula": "C8H8O",
+        "molecular_weight": 120.057514876,
+        "carbon_count": 8,
+        "hydrogen_count": 8,
+        "oxygen_count": 1,
+        "description": "芳香酮",
+        "category": "predefined",
+        "tags": [
+          "酮",
+          "芳香烃",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.756179",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_32",
+        "name": "甲酸",
+        "smiles": "C(=O)O",
+        "formula": "CH2O2",
+        "molecular_weight": 46.005479304,
+        "carbon_count": 1,
+        "hydrogen_count": 2,
+        "oxygen_count": 2,
+        "description": "最简单的羧酸",
+        "category": "predefined",
+        "tags": [
+          "羧酸",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.757897",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_33",
+        "name": "乙酸",
+        "smiles": "CC(=O)O",
+        "formula": "C2H4O2",
+        "molecular_weight": 60.021129368000004,
+        "carbon_count": 2,
+        "hydrogen_count": 4,
+        "oxygen_count": 2,
+        "description": "醋的主要成分",
+        "category": "predefined",
+        "tags": [
+          "羧酸",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.758933",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_34",
+        "name": "丙酸",
+        "smiles": "CCC(=O)O",
+        "formula": "C3H6O2",
+        "molecular_weight": 74.036779432,
+        "carbon_count": 3,
+        "hydrogen_count": 6,
+        "oxygen_count": 2,
+        "description": "三碳羧酸",
+        "category": "predefined",
+        "tags": [
+          "羧酸",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.760934",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_35",
+        "name": "苯甲酸",
+        "smiles": "c1ccc(cc1)C(=O)O",
+        "formula": "C7H6O2",
+        "molecular_weight": 122.036779432,
+        "carbon_count": 7,
+        "hydrogen_count": 6,
+        "oxygen_count": 2,
+        "description": "芳香羧酸",
+        "category": "predefined",
+        "tags": [
+          "羧酸",
+          "芳香烃",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.762311",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_36",
+        "name": "乙酸甲酯",
+        "smiles": "CC(=O)OC",
+        "formula": "C3H6O2",
+        "molecular_weight": 74.036779432,
+        "carbon_count": 3,
+        "hydrogen_count": 6,
+        "oxygen_count": 2,
+        "description": "水果香味物质",
+        "category": "predefined",
+        "tags": [
+          "酯",
+          "含氧有机物",
+          "香料"
+        ],
+        "created_date": "2026-02-09T10:28:07.763923",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_37",
+        "name": "乙酸乙酯",
+        "smiles": "CC(=O)OCC",
+        "formula": "C4H8O2",
+        "molecular_weight": 88.052429496,
+        "carbon_count": 4,
+        "hydrogen_count": 8,
+        "oxygen_count": 2,
+        "description": "常用溶剂",
+        "category": "predefined",
+        "tags": [
+          "酯",
+          "含氧有机物",
+          "溶剂"
+        ],
+        "created_date": "2026-02-09T10:28:07.766115",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_38",
+        "name": "苯甲酸甲酯",
+        "smiles": "c1ccc(cc1)C(=O)OC",
+        "formula": "C8H8O2",
+        "molecular_weight": 136.052429496,
+        "carbon_count": 8,
+        "hydrogen_count": 8,
+        "oxygen_count": 2,
+        "description": "芳香酯",
+        "category": "predefined",
+        "tags": [
+          "酯",
+          "芳香烃",
+          "含氧有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.766496",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_39",
+        "name": "氯甲烷",
+        "smiles": "CCl",
+        "formula": "CH3Cl",
+        "molecular_weight": 49.992327775999996,
+        "carbon_count": 2,
+        "hydrogen_count": 3,
+        "oxygen_count": 0,
+        "description": "最简单的卤代烷",
+        "category": "predefined",
+        "tags": [
+          "卤代烃",
+          "含氯"
+        ],
+        "created_date": "2026-02-09T10:28:07.769712",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_40",
+        "name": "四氯化碳",
+        "smiles": "C(Cl)(Cl)(Cl)Cl",
+        "formula": "CCl4",
+        "molecular_weight": 151.87541072,
+        "carbon_count": 2,
+        "hydrogen_count": 0,
+        "oxygen_count": 0,
+        "description": "曾经常用的溶剂",
+        "category": "predefined",
+        "tags": [
+          "卤代烃",
+          "含氯",
+          "溶剂"
+        ],
+        "created_date": "2026-02-09T10:28:07.771220",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_41",
+        "name": "氯苯",
+        "smiles": "c1ccc(cc1)Cl",
+        "formula": "C6H5Cl",
+        "molecular_weight": 112.00797784,
+        "carbon_count": 7,
+        "hydrogen_count": 5,
+        "oxygen_count": 0,
+        "description": "芳香卤代烃",
+        "category": "predefined",
+        "tags": [
+          "卤代烃",
+          "芳香烃",
+          "含氯"
+        ],
+        "created_date": "2026-02-09T10:28:07.773851",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_42",
+        "name": "甲胺",
+        "smiles": "CN",
+        "formula": "CH5N",
+        "molecular_weight": 31.042199159999996,
+        "carbon_count": 1,
+        "hydrogen_count": 5,
+        "oxygen_count": 0,
+        "description": "最简单的胺类",
+        "category": "predefined",
+        "tags": [
+          "胺",
+          "含氮有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.773851",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_43",
+        "name": "乙胺",
+        "smiles": "CCN",
+        "formula": "C2H7N",
+        "molecular_weight": 45.057849223999995,
+        "carbon_count": 2,
+        "hydrogen_count": 7,
+        "oxygen_count": 0,
+        "description": "二碳胺",
+        "category": "predefined",
+        "tags": [
+          "胺",
+          "含氮有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.776865",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_44",
+        "name": "苯胺",
+        "smiles": "c1ccc(cc1)N",
+        "formula": "C6H7N",
+        "molecular_weight": 93.057849224,
+        "carbon_count": 6,
+        "hydrogen_count": 7,
+        "oxygen_count": 0,
+        "description": "芳香胺",
+        "category": "predefined",
+        "tags": [
+          "胺",
+          "芳香烃",
+          "含氮有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.779038",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_45",
+        "name": "咪唑",
+        "smiles": "c1c[nH]cn1",
+        "formula": "C3H4N2",
+        "molecular_weight": 68.037448128,
+        "carbon_count": 3,
+        "hydrogen_count": 4,
+        "oxygen_count": 0,
+        "description": "五元杂环",
+        "category": "predefined",
+        "tags": [
+          "杂环",
+          "含氮有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.781047",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_46",
+        "name": "吡啶",
+        "smiles": "c1ncccc1",
+        "formula": "C5H5N",
+        "molecular_weight": 79.04219916,
+        "carbon_count": 5,
+        "hydrogen_count": 5,
+        "oxygen_count": 0,
+        "description": "六元杂环",
+        "category": "predefined",
+        "tags": [
+          "杂环",
+          "含氮有机物"
+        ],
+        "created_date": "2026-02-09T10:28:07.783046",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_47",
+        "name": "杜瓦苯",
+        "smiles": "C1=CC2C1C2",
+        "formula": "C5H6",
+        "molecular_weight": 66.046950192,
+        "carbon_count": 5,
+        "hydrogen_count": 6,
+        "oxygen_count": 0,
+        "description": "苯的价键异构体",
+        "category": "predefined",
+        "tags": [
+          "苯异构体",
+          "价键异构体"
+        ],
+        "created_date": "2026-02-09T10:28:07.784988",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_48",
+        "name": "富烯",
+        "smiles": "C=C1C=CC=C1",
+        "formula": "C6H6",
+        "molecular_weight": 78.046950192,
+        "carbon_count": 6,
+        "hydrogen_count": 6,
+        "oxygen_count": 0,
+        "description": "苯的价键异构体",
+        "category": "predefined",
+        "tags": [
+          "苯异构体",
+          "价键异构体"
+        ],
+        "created_date": "2026-02-09T10:28:07.787079",
+        "custom_properties": {}
+      },
+      {
+        "id": "mol_20260209_102807_49",
+        "name": "棱晶烷",
+        "smiles": "C12C3C1C1C2C31",
+        "formula": "C6H6",
+        "molecular_weight": 78.046950192,
+        "carbon_count": 6,
+        "hydrogen_count": 6,
+        "oxygen_count": 0,
+        "description": "苯的笼状异构体",
+        "category": "predefined",
+        "tags": [
+          "苯异构体",
+          "笼状结构"
+        ],
+        "created_date": "2026-02-09T10:28:07.789079",
+        "custom_properties": {}
+      }
+    ],
+    "favorites": [],
+    "ai_generated": [
+      {
+        "id": "mol_20260219_154900_0_0",
+        "name": "C2H4O2_异构体_1",
+        "smiles": "OCC=O",
+        "formula": "C2H4O2",
+        "molecular_weight": 60.021129368000004,
+        "carbon_count": 2,
+        "hydrogen_count": 4,
+        "oxygen_count": 2,
+        "description": "由 deepseek AI 生成的C2H4O2异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C2H4O2"
+        ],
+        "created_date": "2026-02-19T15:49:00.414157",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_154946_2_0",
+        "name": "C3H6O2_异构体_3",
+        "smiles": "O=CCCO",
+        "formula": "C3H6O2",
+        "molecular_weight": 74.036779432,
+        "carbon_count": 3,
+        "hydrogen_count": 6,
+        "oxygen_count": 2,
+        "description": "由 deepseek AI 生成的C3H6O2异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C3H6O2"
+        ],
+        "created_date": "2026-02-19T15:49:46.693979",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_154946_3_1",
+        "name": "C3H6O2_异构体_4",
+        "smiles": "CC(O)C=O",
+        "formula": "C3H6O2",
+        "molecular_weight": 74.036779432,
+        "carbon_count": 3,
+        "hydrogen_count": 6,
+        "oxygen_count": 2,
+        "description": "由 deepseek AI 生成的C3H6O2异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C3H6O2"
+        ],
+        "created_date": "2026-02-19T15:49:46.694043",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_5_1",
+        "name": "C8H18_异构体_6",
+        "smiles": "CC(C)CCCCC",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.603707",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_6_2",
+        "name": "C8H18_异构体_7",
+        "smiles": "CCC(C)CCCC",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.603803",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_7_3",
+        "name": "C8H18_异构体_8",
+        "smiles": "CCCC(C)CCC",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.603884",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_8_4",
+        "name": "C8H18_异构体_9",
+        "smiles": "CC(C)C(C)CCC",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.603982",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_9_5",
+        "name": "C8H18_异构体_10",
+        "smiles": "CC(C)CC(C)CC",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.604050",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_10_6",
+        "name": "C8H18_异构体_11",
+        "smiles": "CCC(C)C(C)CC",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.604122",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_11_7",
+        "name": "C8H18_异构体_12",
+        "smiles": "CC(C)(C)CCCC",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.604211",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_12_8",
+        "name": "C8H18_异构体_13",
+        "smiles": "CCC(C)(C)CCC",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.604306",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_13_9",
+        "name": "C8H18_异构体_14",
+        "smiles": "CC(C)C(C)C(C)C",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.604400",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_14_10",
+        "name": "C8H18_异构体_15",
+        "smiles": "CC(C)C(C)(C)CC",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.604496",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155024_15_11",
+        "name": "C8H18_异构体_16",
+        "smiles": "CC(C)CC(C)(C)C",
+        "formula": "C8H18",
+        "molecular_weight": 114.14085057599999,
+        "carbon_count": 8,
+        "hydrogen_count": 18,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C8H18异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C8H18"
+        ],
+        "created_date": "2026-02-19T15:50:24.604589",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155025_16_0",
+        "name": "C10H22_异构体_17",
+        "smiles": "CCCCCCCCCC",
+        "formula": "C10H22",
+        "molecular_weight": 142.172150704,
+        "carbon_count": 10,
+        "hydrogen_count": 22,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C10H22异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C10H22"
+        ],
+        "created_date": "2026-02-19T15:50:25.199822",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155025_17_1",
+        "name": "C10H22_异构体_18",
+        "smiles": "CCCCCCCC(C)C",
+        "formula": "C10H22",
+        "molecular_weight": 142.172150704,
+        "carbon_count": 10,
+        "hydrogen_count": 22,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C10H22异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C10H22"
+        ],
+        "created_date": "2026-02-19T15:50:25.199922",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155025_18_2",
+        "name": "C10H22_异构体_19",
+        "smiles": "CCCCCCC(C)CC",
+        "formula": "C10H22",
+        "molecular_weight": 142.172150704,
+        "carbon_count": 10,
+        "hydrogen_count": 22,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C10H22异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C10H22"
+        ],
+        "created_date": "2026-02-19T15:50:25.199987",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155025_19_3",
+        "name": "C10H22_异构体_20",
+        "smiles": "CCCCCC(C)CCC",
+        "formula": "C10H22",
+        "molecular_weight": 142.172150704,
+        "carbon_count": 10,
+        "hydrogen_count": 22,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C10H22异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C10H22"
+        ],
+        "created_date": "2026-02-19T15:50:25.200045",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260219_155025_20_4",
+        "name": "C10H22_异构体_21",
+        "smiles": "CCCCC(C)CCCC",
+        "formula": "C10H22",
+        "molecular_weight": 142.172150704,
+        "carbon_count": 10,
+        "hydrogen_count": 22,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C10H22异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C10H22"
+        ],
+        "created_date": "2026-02-19T15:50:25.200101",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      }
+    ],
+    "ai_verified": []
+  },
+  "total_count": 69
+}
