@@ -212,10 +212,10 @@ python Isomer_Main.py
 
 ```bash
 # 双击运行
-run_molgen.bat
+run_Isomer.bat
 
 # 或在命令行中运行
-cmd /k run_molgen.bat
+cmd /k run_Isomer.bat
 ```
 
 ### 5.3 首次使用
@@ -258,7 +258,7 @@ cmd /k run_molgen.bat
 ```
 Isomer/
 ├── Isomer_Main.py          # 主程序入口（GUI 应用）
-├── run_molgen.bat             # Windows 启动脚本
+├── run_Isomer.bat             # Windows 启动脚本
 │
 ├── analysis/                  # 分析模块
 │   ├── alkane_isomer_counter.py    # 烷烃异构体计数

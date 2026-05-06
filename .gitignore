@@ -47,3 +47,4 @@ README_offline.md
 build/
 dist/
 *.spec
+build*.bat

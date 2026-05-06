@@ -145,7 +145,7 @@ SMILES：  C(C)(C)C  （代表 2-甲基丙烷 / 异丁烷）
 Isomer/
 │
 ├── Isomer_Main.py          # 主程序（启动这个）
-├── run_molgen.bat             # Windows快捷启动
+├── run_Isomer.bat             # Windows快捷启动
 │
 ├── generators/                 # 异构体生成器
 │   ├── alkane_tree_generator.py  # 树结构生成算法（核心！）
@@ -185,7 +185,7 @@ pip install rdkit openai pillow scikit-learn numpy pandas
 ### 2. 启动程序
 
 ```bash
-# 方法1：双击运行 run_molgen.bat
+# 方法1：双击运行 run_Isomer.bat
 
 # 方法2：命令行运行
 python Isomer/Isomer_Main.py
@@ -275,4 +275,4 @@ SMILES（Simplified Molecular Input Line Entry System）是一种用字符串表
 
 ---
 
-**开始使用：双击 `run_molgen.bat` 或运行 `python Isomer_Main.py`**
+**开始使用：双击 `run_Isomer.bat` 或运行 `python Isomer_Main.py`**

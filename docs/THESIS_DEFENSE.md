@@ -388,7 +388,7 @@ C10H22: 75/75 ✅
 ```bash
 # 方式1：运行批处理文件
 cd Isomer
-run_molgen.bat
+run_Isomer.bat
 
 # 方式2：直接运行 Python
 python Isomer_Main.py
