@@ -1,1 +1,1 @@
-# MolGenPlus 核心模块
+# Isomer 核心模块

@@ -12,7 +12,7 @@ import re
 class MoleculeLibrary:
     """分子库管理类"""
 
-    def __init__(self, library_file: str = None):
+    def __init__(self, library_file: str = None, auto_reload: bool = False):
         if library_file is None:
             # 默认使用 data 目录中的文件
             library_file = os.path.join(
@@ -21,7 +21,24 @@ class MoleculeLibrary:
                 'molecule_library.json'
             )
         self.library_file = library_file
+        self._last_modified = 0  # 记录文件最后修改时间
+        self.auto_reload = auto_reload  # 自动刷新开关
         self.library_data = self._load_library()
+    
+    def reload(self) -> bool:
+        """重新加载分子库文件（动态更新）"""
+        try:
+            current_mtime = os.path.getmtime(self.library_file)
+            # 只在文件确实有更新时才重新加载
+            if current_mtime > self._last_modified:
+                self.library_data = self._load_library()
+                self._last_modified = current_mtime
+                print(f"[分子库刷新] 已加载最新数据，共 {self.get_total_count()} 个分子")
+                return True
+            return False
+        except Exception as e:
+            print(f"[分子库刷新] 失败: {e}")
+            return False
     
     def _load_library(self) -> Dict[str, Any]:
         """加载分子库数据"""
@@ -193,13 +210,22 @@ class MoleculeLibrary:
         return {"success": False, "error": "分子不存在"}
     
     def search_molecules(self, 
-                        query: str = "", 
-                        formula: str = "", 
-                        category: str = "",
-                        tags: List[str] = None,
-                        carbon_range: tuple = None,
-                        hydrogen_range: tuple = None) -> List[Dict[str, Any]]:
-        """搜索分子"""
+                       query: str = "", 
+                       formula: str = "", 
+                       category: str = "",
+                       tags: List[str] = None,
+                       carbon_range: tuple = None,
+                       hydrogen_range: tuple = None,
+                       auto_refresh: bool = True) -> List[Dict[str, Any]]:
+        """搜索分子
+        
+        Args:
+            auto_refresh: 是否自动刷新分子库（默认True，动态读取最新文件）
+        """
+        # 每次搜索时自动刷新，获取最新数据
+        if auto_refresh:
+            self.reload()
+        
         results = []
         
         for cat_name, molecules in self.library_data["categories"].items():
@@ -251,6 +277,12 @@ class MoleculeLibrary:
     def get_all_categories(self) -> List[str]:
         """获取所有类别"""
         return list(self.library_data["categories"].keys())
+    
+    def get_total_count(self) -> int:
+        """获取分子库中分子总数"""
+        return self.library_data.get("total_count", 0) or sum(
+            len(molecules) for molecules in self.library_data["categories"].values()
+        )
     
     def get_statistics(self) -> Dict[str, Any]:
         """获取库统计信息"""

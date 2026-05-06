@@ -134,10 +134,52 @@ class DeepSeekDatabaseIntegration:
             with open(backup_path, 'w', encoding='utf-8') as f:
                 json.dump(self.library_data, f, ensure_ascii=False, indent=2)
             logger.info(f"备份创建成功: {backup_path}")
+            
+            # 自动清理：保持备份文件不超过10个
+            self._cleanup_old_backups(max_backups=10)
+            
             return backup_path
         except Exception as e:
             logger.error(f"创建备份失败: {e}")
             raise
+    
+    def _cleanup_old_backups(self, max_backups: int = 10) -> int:
+        """清理多余的备份文件，保留最新的N个
+        
+        Args:
+            max_backups: 最大保留备份数量
+            
+        Returns:
+            删除的文件数量
+        """
+        if not os.path.exists(self.backup_dir):
+            return 0
+        
+        # 获取所有备份文件，按修改时间排序（最旧的在前）
+        backup_files = []
+        for filename in os.listdir(self.backup_dir):
+            if filename.endswith('.json') and filename.startswith('backup_'):
+                filepath = os.path.join(self.backup_dir, filename)
+                backup_files.append((filepath, os.path.getmtime(filepath)))
+        
+        # 按修改时间排序（从旧到新）
+        backup_files.sort(key=lambda x: x[1])
+        
+        # 删除超出限制的旧文件
+        deleted_count = 0
+        if len(backup_files) > max_backups:
+            files_to_delete = len(backup_files) - max_backups
+            for i in range(files_to_delete):
+                try:
+                    os.remove(backup_files[i][0])
+                    logger.info(f"已删除旧备份: {backup_files[i][0]}")
+                    deleted_count += 1
+                except Exception as e:
+                    logger.warning(f"删除备份失败: {backup_files[i][0]}, 错误: {e}")
+            
+            logger.info(f"备份清理完成：删除了 {deleted_count} 个旧文件，保留 {max_backups} 个最新备份")
+        
+        return deleted_count
     
     def _log_operation(self, operation: str, details: Dict[str, Any]):
         """记录数据库操作
@@ -775,7 +817,7 @@ def quick_ai_update(library_file: str = "molecule_library.json",
             "error": str(e)
         }
 
-# 快捷函数 - 兼容 MolGenPlus_Main.py 的调用接口
+# 快捷函数 - 兼容 Isomer_Main.py 的调用接口
 def ai_deduplicate_smiles(smiles_list: List[str], use_smart_analysis: bool = False) -> Dict[str, Any]:
     """AI智能去重SMILES列表
 
@@ -920,7 +962,7 @@ if __name__ == "__main__":
     # 示例1: 快速更新分子库
     print("\n示例1: 快速更新C8H18到20个异构体")
     result = quick_ai_update(
-        library_file="MolGenPlus_Project/molecule_library.json",
+        library_file="data/molecule_library.json",
         formulas=["C8H18"],
         target_per_formula=20,
         api_key=os.environ.get('DEEPSEEK_API_KEY')
@@ -931,7 +973,7 @@ if __name__ == "__main__":
     print("\n示例2: 手动补充C10H22异构体")
     integration = DeepSeekDatabaseIntegration(
         api_key=os.environ.get('DEEPSEEK_API_KEY'),
-        library_file="MolGenPlus_Project/molecule_library.json"
+        library_file="data/molecule_library.json"
     )
 
     result = integration.ai_enhance_library(

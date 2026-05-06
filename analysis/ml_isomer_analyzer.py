@@ -2,7 +2,7 @@
 """
 机器学习分子分析模块
 提供分子特征提取、聚类分析和预测功能
-兼容MolGenPlus项目架构
+兼容Isomer项目架构
 """
 
 from rdkit import Chem

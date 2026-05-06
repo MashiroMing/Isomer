@@ -1,8 +1,8 @@
-# MolGenPlus+ 有机分子同分异构体分析工具
+# Isomer+ 有机分子同分异构体分析工具
 
 ## 项目简介
 
-MolGenPlus 是一个功能强大的**有机分子同分异构体分析工具**，专为化学老师和学生设计。它可以：
+Isomer 是一个功能强大的**有机分子同分异构体分析工具**，专为化学老师和学生设计。它可以：
 
 - **自动生成** C1-C10 烷烃的**所有**同分异构体
 - **验证** 生成的分子结构是否正确
@@ -142,9 +142,9 @@ SMILES：  C(C)(C)C  （代表 2-甲基丙烷 / 异丁烷）
 ## 项目结构
 
 ```
-MolGenPlus_Project/
+Isomer/
 │
-├── MolGenPlus_Main.py          # 主程序（启动这个）
+├── Isomer_Main.py          # 主程序（启动这个）
 ├── run_molgen.bat             # Windows快捷启动
 │
 ├── generators/                 # 异构体生成器
@@ -188,7 +188,7 @@ pip install rdkit openai pillow scikit-learn numpy pandas
 # 方法1：双击运行 run_molgen.bat
 
 # 方法2：命令行运行
-python MolGenPlus_Project/MolGenPlus_Main.py
+python Isomer/Isomer_Main.py
 ```
 
 ### 3. 使用方法
@@ -275,4 +275,4 @@ SMILES（Simplified Molecular Input Line Entry System）是一种用字符串表
 
 ---
 
-**开始使用：双击 `run_molgen.bat` 或运行 `python MolGenPlus_Main.py`**
+**开始使用：双击 `run_molgen.bat` 或运行 `python Isomer_Main.py`**

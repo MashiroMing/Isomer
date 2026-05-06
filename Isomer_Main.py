@@ -1,10 +1,11 @@
-# MolGenPlus_Main.py
+# Isomer_Main.py
 
 import tkinter as tk
 from tkinter import messagebox, scrolledtext, filedialog
 import sys
 import re
 import os
+import threading
 from typing import Any
 from datetime import datetime
 import warnings
@@ -15,6 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # 导入输出优化器
 try:
     from utils.output_optimizer import setup_silent_mode, get_clean_summary
+    from utils.mol_utils import process_smiles_to_data
     setup_silent_mode()
 except ImportError:
     # 如果优化器不可用，使用基本静默设置
@@ -28,10 +30,16 @@ except ImportError:
 
 # 动态导入项目文件 (使用合并后的模块)
 try:
-    from generators.isomer_c1_c5_combined import generate_isomers_c1_c5, generate_isomers_c1_c5_hetero, generate_isomers_c1_to_c5
-    from generators.isomer_c6_combined import generate_isomers_c6, generate_c6h6_general, generate_isomers_c6_hetero
-    from generators.isomer_c8_c10_combined import generate_isomers_c8_c10
-    from generators.isomer_general import generate_isomers_general
+    from generators.isomer_combined import (
+        generate_isomers_c1_c5,
+        generate_isomers_c1_c5_hetero,
+        generate_isomers_c6,
+        generate_c6h6_general,
+        generate_isomers_c6_hetero,
+        generate_isomers_general,
+        generate_isomers_combined  # 统一入口
+    )
+    from generators.alkane_tree_generator import generate_alkane_isomers
     from analysis.structure_filter import StructureFilter
     from database.molecule_library import molecule_library
     try:
@@ -125,7 +133,149 @@ def format_formula(formula: str) -> str:
 # 核心调度逻辑 (分发到纯烃或含氧模块)
 # ==============================================================================
 
-def parse_formula_and_dispatch(formula: str, structure_prefs: dict[str, str] = None) -> dict[str, str] | list[dict[str, Any]]:
+def _merge_library_and_generator_results(
+    library_results: list[dict[str, Any]] | None, 
+    generator_results: list[dict[str, Any]] | None
+) -> list[dict[str, Any]]:
+    """合并分子库和生成器的结果（并集），自动去重
+    
+    Args:
+        library_results: 分子库查询结果
+        generator_results: 生成器生成结果
+        
+    Returns:
+        合并后的异构体列表（去重）
+    """
+    # 收集所有 SMILES 用于去重
+    seen_smiles = set()
+    merged = []
+    
+    def add_if_new(mol_data: dict[str, Any]) -> None:
+        """添加分子，如果 SMILES 不重复"""
+        smiles = mol_data.get("SMILES", "")
+        if smiles and smiles not in seen_smiles:
+            seen_smiles.add(smiles)
+            merged.append(mol_data)
+    
+    # 先添加分子库的结果（标记来源）
+    if library_results:
+        for mol in library_results:
+            # 标记来源
+            mol_copy = mol.copy()
+            mol_copy["Source"] = "分子库"
+            add_if_new(mol_copy)
+        print(f"[并集合并] 分子库: {len(library_results)} 个")
+    
+    # 再添加生成器的结果（去重）
+    if generator_results:
+        added_count = 0
+        for mol in generator_results:
+            smiles = mol.get("SMILES", "")
+            if smiles and smiles not in seen_smiles:
+                seen_smiles.add(smiles)
+                mol_copy = mol.copy()
+                mol_copy["Source"] = "算法生成"
+                merged.append(mol_copy)
+                added_count += 1
+        print(f"[并集合并] 生成器: 新增 {added_count} 个（去重后）")
+    
+    total = len(merged)
+    if library_results and generator_results:
+        print(f"[并集合并] 最终结果: {total} 个异构体（分子库 + 生成器）")
+    elif library_results:
+        print(f"[并集合并] 最终结果: {total} 个异构体（仅分子库）")
+    elif generator_results:
+        print(f"[并集合并] 最终结果: {total} 个异构体（仅生成器）")
+    
+    return merged
+
+def _query_library_for_formula(formula: str) -> list[dict[str, Any]] | None:
+    """从分子库查询指定分子式的异构体，并转换为GUI所需格式
+    
+    Args:
+        formula: 分子式（如 C7H10）
+        
+    Returns:
+        分子列表，如果分子库为空或未找到则返回None
+    """
+    try:
+        from database.molecule_library import MoleculeLibrary
+        from rdkit import Chem
+        from rdkit.Chem import AllChem
+        
+        lib = MoleculeLibrary()
+        results = lib.search_molecules(formula=formula)
+        
+        if not results:
+            return None
+        
+        # 转换为GUI需要的格式（与 process_smiles_to_data 一致）
+        converted_results = []
+        for mol_data in results:
+            smiles = mol_data.get("smiles", "")
+            if not smiles:
+                continue
+            
+            try:
+                mol = Chem.MolFromSmiles(smiles)
+                if mol is None:
+                    continue
+                
+                # 生成坐标
+                mol_with_h = Chem.AddHs(mol)
+                dim_type = "3D"
+                try:
+                    if AllChem.EmbedMolecule(mol_with_h, AllChem.ETKDG()) == -1:
+                        raise ValueError("3D Embedding failed")
+                except:
+                    AllChem.Compute2DCoords(mol_with_h)
+                    dim_type = "2D"
+                
+                conf = mol_with_h.GetConformer()
+                coords = []
+                for i in range(mol_with_h.GetNumAtoms()):
+                    atom = mol_with_h.GetAtomWithIdx(i)
+                    pos = conf.GetAtomPosition(i)
+                    z_coord = f", z={pos.z:.4f}" if dim_type == "3D" else ""
+                    coords.append(f"Atom {i+1} ({atom.GetSymbol()}): x={pos.x:.4f}, y={pos.y:.4f}{z_coord}")
+                coords_str = "\n".join(coords)
+                
+                # 获取InChIKey
+                inchikey = Chem.MolToInchiKey(mol) if hasattr(Chem, 'MolToInchiKey') else ""
+                
+                # 结构类型（从分子库获取或默认）
+                structure_type = mol_data.get("description", "")
+                if not structure_type or structure_type == "":
+                    structure_type = "AI生成异构体"
+                
+                converted_results.append({
+                    "SMILES": Chem.MolToSmiles(mol, canonical=True),
+                    "InChIKey": inchikey,
+                    "StructureType": structure_type,
+                    "Coords": coords_str,
+                    "Dimension": dim_type,
+                    "Mol": mol,
+                    "Name": mol_data.get("name", ""),  # 保留原始名称
+                    "ID": mol_data.get("id", "")       # 保留原始ID
+                })
+            except Exception as e:
+                print(f"处理分子 {smiles} 失败: {e}")
+                continue
+        
+        if converted_results:
+            print(f"[分子库查询] {formula}: 成功转换 {len(converted_results)} 个异构体")
+            return converted_results
+            
+    except Exception as e:
+        print(f"查询分子库失败: {e}")
+    return None
+
+
+def parse_formula_and_dispatch(
+    formula: str,
+    structure_prefs: dict[str, str] = None,
+    progress_callback: Any = None
+) -> dict[str, str] | list[dict[str, Any]]:
     """
     解析分子式 (CnHmOp)，根据碳数和是否含氧调用对应的生成模块。
     现在支持C7及以上的通用算法和结构筛选。
@@ -134,6 +284,7 @@ def parse_formula_and_dispatch(formula: str, structure_prefs: dict[str, str] = N
     Args:
         formula: 分子式，如 CH4, C, C2H6O, C3H6O2
         structure_prefs: 结构偏好字典，可选
+        progress_callback: 进度回调 (current, total, message)
     """
     formula = formula.strip().upper().replace(' ', '')
 
@@ -161,118 +312,165 @@ def parse_formula_and_dispatch(formula: str, structure_prefs: dict[str, str] = N
         
     contains_o = 'O' in formula
 
-    # 生成原始异构体
-    if 1 <= n_c <= 5:
-        if contains_o:
-            # 含氧，调度到 C1-C5 杂原子文件
-            isomers = generate_isomers_c1_c5_hetero(formula)
-        else:
-            # 纯烃，调度到 C1-C5 纯烃文件
-            isomers = generate_isomers_c1_c5(formula)
-            
-    elif n_c == 6:
-        if contains_o:
-            # 含氧，调度到 C6 杂原子文件
-            isomers = generate_isomers_c6_hetero(formula)
-        else:
-            # 获取氢数
-            match_h = re.search(r'H(\d*)', formula)
-            n_h = int(match_h.group(1)) if match_h and match_h.group(1) else 0
-            
-            # C6纯烃，特殊处理C6H6（使用通用枚举算法，包含所有127种异构体）
-            if n_h == 6:  # C6H6 - 苯及所有可能的价键异构体，使用通用枚举生成器
-                isomers = generate_c6h6_general(formula)
+    # 【关键修改】优先从分子库查询，避免与AI增强的分子脱节
+    if n_c >= 6:  # C6及以上优先查分子库
+        library_results = _query_library_for_formula(formula)
+        if library_results:
+            print(f"[分子库查询] {formula}: 找到 {len(library_results)} 个异构体")
+            # 继续调用生成器，合并结果（并集）
+        
+        # 生成器也继续调用
+        generator_results = None
+        
+        if 1 <= n_c <= 5:
+            if contains_o:
+                # 含氧，调度到 C1-C5 杂原子文件
+                generator_results = generate_isomers_c1_c5_hetero(formula)
             else:
-                # 其他C6纯烃使用增强算法
-                isomers = generate_c6_enhanced(formula)
-            
-    elif n_c == 7:
-        # C7纯烃，特殊处理C7H16（使用已知的9种异构体）
-        if not contains_o:
-            isomers = generate_isomers_general(formula)
-        else:
-            # 含氧C7使用通用算法
-            isomers = generate_isomers_general(formula)
-            
-    elif n_c == 8:
-        # C8纯烃，特殊处理C8H18（使用算法生成18种异构体）
-        if not contains_o:
-            # 获取氢数以区分烷烃和烯烃/炔烃
+                # 纯烃，调度到 C1-C5 纯烃文件
+                generator_results = generate_isomers_c1_c5(formula)
+                
+        elif n_c == 6:
+            if contains_o:
+                # 含氧，调度到 C6 杂原子文件
+                generator_results = generate_isomers_c6_hetero(formula)
+            else:
+                # 获取氢数
+                match_h = re.search(r'H(\d*)', formula)
+                n_h = int(match_h.group(1)) if match_h and match_h.group(1) else 0
+                
+                # C6纯烃，特殊处理C6H6（使用通用枚举算法，包含所有127种异构体）
+                if n_h == 6:  # C6H6 - 苯及所有可能的价键异构体，使用通用枚举生成器
+                    generator_results = generate_c6h6_general(formula)
+                else:
+                    # 其他C6纯烃使用标准算法
+                    generator_results = generate_isomers_c6(formula)
+                
+        elif n_c == 7:
+            # C7纯烃，特殊处理C7H16（使用已知的9种异构体）
+            if not contains_o:
+                generator_results = generate_isomers_general(formula)
+            else:
+                # 含氧C7使用通用算法
+                generator_results = generate_isomers_general(formula)
+                
+        elif n_c == 8:
+            # C8纯烃，特殊处理C8H18（使用算法生成18种异构体）
+            if not contains_o:
+                # 获取氢数以区分烷烃和烯烃/炔烃
+                match_h = re.search(r'H(\d*)', formula)
+                n_h = int(match_h.group(1)) if match_h and match_h.group(1) else 0
+                
+                # 只有C8H18（辛烷）使用树算法，其他C8化合物使用通用算法
+                if n_h == 18:  # C8H18 - 辛烷
+                    try:
+                        smiles_list = generate_alkane_isomers(8, progress_callback)
+                        generator_results = process_smiles_to_data(smiles_list)
+                        print(f"使用树算法生成器: {len(smiles_list)}种异构体")
+                    except Exception as e:
+                        print(f"警告: C8H18生成器出错: {e}，使用通用算法")
+                        generator_results = generate_isomers_general(formula)
+                else:
+                    # C8H16等非烷烃使用通用算法
+                    print(f"C8化合物{formula}使用通用算法")
+                    generator_results = generate_isomers_general(formula)
+            else:
+                # 含氧C8使用通用算法
+                generator_results = generate_isomers_general(formula)
+                
+        elif n_c == 9:
+            # C9纯烃，特殊处理C9H20（使用算法生成35种异构体）
+            if not contains_o:
+                # 获取氢数以区分烷烃和其他化合物
+                match_h = re.search(r'H(\d*)', formula)
+                n_h = int(match_h.group(1)) if match_h and match_h.group(1) else 0
+                
+                # 只有C9H20（壬烷）使用树算法，其他C9化合物使用通用算法
+                if n_h == 20:  # C9H20 - 壬烷
+                    try:
+                        smiles_list = generate_alkane_isomers(9, progress_callback)
+                        generator_results = process_smiles_to_data(smiles_list)
+                        print(f"使用树算法生成器: {len(smiles_list)}种异构体")
+                    except Exception as e:
+                        print(f"警告: C9H20生成器出错: {e}，使用通用算法")
+                        generator_results = generate_isomers_general(formula)
+                else:
+                    # C9H18等非烷烃使用通用算法
+                    print(f"C9化合物{formula}使用通用算法")
+                    generator_results = generate_isomers_general(formula)
+            else:
+                # 含氧C9使用通用算法
+                generator_results = generate_isomers_general(formula)
+                
+        elif n_c == 10:
+            # C10纯烃，特殊处理C10H22（使用算法生成75种异构体）
+            if not contains_o:
+                # 获取氢数以区分烷烃和其他化合物
+                match_h = re.search(r'H(\d*)', formula)
+                n_h = int(match_h.group(1)) if match_h and match_h.group(1) else 0
+                
+                # 只有C10H22（癸烷）使用树算法，其他C10化合物使用通用算法
+                if n_h == 22:  # C10H22 - 癸烷
+                    try:
+                        smiles_list = generate_alkane_isomers(10, progress_callback)
+                        generator_results = process_smiles_to_data(smiles_list)
+                        print(f"使用树算法生成器: {len(smiles_list)}种异构体")
+                    except Exception as e:
+                        print(f"警告: C10H22生成器出错: {e}，使用通用算法")
+                        generator_results = generate_isomers_general(formula)
+                else:
+                    # C10H20等非烷烃使用通用算法
+                    print(f"C10化合物{formula}使用通用算法")
+                    generator_results = generate_isomers_general(formula)
+            else:
+                # 含氧C10使用通用算法
+                generator_results = generate_isomers_general(formula)
+                
+        elif n_c >= 11:
+            # C11及以上：饱和烷烃使用树算法，其他使用通用算法
             match_h = re.search(r'H(\d*)', formula)
             n_h = int(match_h.group(1)) if match_h and match_h.group(1) else 0
             
-            # 只有C8H18（辛烷）使用专用算法，其他C8化合物使用通用算法
-            if n_h == 18:  # C8H18 - 辛烷
+            if n_h == 2 * n_c + 2:
+                # 饱和烷烃 CnH2n+2，使用树算法
                 try:
-                    # 使用C8-C10生成器
-                    from generators.isomer_c8_c10_combined import generate_isomers_c8_c10
-                    isomers = generate_isomers_c8_c10(formula)
-                    print("使用C8-C10生成器")
+                    smiles_list = generate_alkane_isomers(n_c, progress_callback)
+                    generator_results = process_smiles_to_data(smiles_list)
+                    print(f"使用树算法生成器: C{n_c}H{n_h} -> {len(smiles_list)}种异构体")
                 except Exception as e:
-                    print(f"警告: C8H18生成器出错: {e}，使用通用算法")
-                    isomers = generate_isomers_general(formula)
+                    print(f"警告: C{n_c}H{n_h}生成器出错: {e}，使用通用算法")
+                    generator_results = generate_isomers_general(formula)
             else:
-                # C8H16等非烷烃使用通用算法
-                print(f"C8化合物{formula}使用通用算法")
-                isomers = generate_isomers_general(formula)
+                # 非饱和烃使用通用算法
+                print(f"C{n_c}化合物{formula}使用通用算法")
+                generator_results = generate_isomers_general(formula)
+                
         else:
-            # 含氧C8使用通用算法
-            isomers = generate_isomers_general(formula)
-            
-    elif n_c == 9:
-        # C9纯烃，特殊处理C9H20（使用算法生成35种异构体）
-        if not contains_o:
-            # 获取氢数以区分烷烃和其他化合物
-            match_h = re.search(r'H(\d*)', formula)
-            n_h = int(match_h.group(1)) if match_h and match_h.group(1) else 0
-            
-            # 只有C9H20（壬烷）使用专用算法，其他C9化合物使用通用算法
-            if n_h == 20:  # C9H20 - 壬烷
-                try:
-                    from generators.isomer_c8_c10_combined import generate_isomers_c8_c10
-                    isomers = generate_isomers_c8_c10(formula)
-                    print("使用C8-C10生成器")
-                except Exception as e:
-                    print(f"警告: C9H20生成器出错: {e}，使用通用算法")
-                    isomers = generate_isomers_general(formula)
+            return {"error": f"不支持的碳原子数。输入碳数: {n_c}"}
+        
+        # 【关键】合并分子库和生成器的结果（并集）
+        # 检查生成器结果是否为错误字典
+        if isinstance(generator_results, dict) and "error" in generator_results:
+            # 生成器出错，尝试只用分子库结果
+            if library_results:
+                print(f"[并集合并] 生成器出错: {generator_results.get('error', 'Unknown error')}，仅使用分子库")
+                isomers = library_results
             else:
-                # C9H18等非烷烃使用通用算法
-                print(f"C9化合物{formula}使用通用算法")
-                isomers = generate_isomers_general(formula)
+                # 两个都没有，返回错误
+                return generator_results
         else:
-            # 含氧C9使用通用算法
-            isomers = generate_isomers_general(formula)
-            
-    elif n_c == 10:
-        # C10纯烃，特殊处理C10H22（使用算法生成75种异构体）
-        if not contains_o:
-            # 获取氢数以区分烷烃和其他化合物
-            match_h = re.search(r'H(\d*)', formula)
-            n_h = int(match_h.group(1)) if match_h and match_h.group(1) else 0
-            
-            # 只有C10H22（癸烷）使用专用算法，其他C10化合物使用通用算法
-            if n_h == 22:  # C10H22 - 癸烷
-                try:
-                    from generators.isomer_c8_c10_combined import generate_isomers_c8_c10
-                    isomers = generate_isomers_c8_c10(formula)
-                    print("使用C8-C10生成器")
-                except Exception as e:
-                    print(f"警告: C10H22生成器出错: {e}，使用通用算法")
-                    isomers = generate_isomers_general(formula)
-            else:
-                # C10H20等非烷烃使用通用算法
-                print(f"C10化合物{formula}使用通用算法")
-                isomers = generate_isomers_general(formula)
-        else:
-            # 含氧C10使用通用算法
-            isomers = generate_isomers_general(formula)
-            
-    elif n_c >= 11:
-        # C11及以上使用通用算法
-        isomers = generate_isomers_general(formula)
-            
+            isomers = _merge_library_and_generator_results(library_results, generator_results)
+        
     else:
-        return {"error": f"不支持的碳原子数。输入碳数: {n_c}"}
+        # C5 及以下不查询分子库，直接使用生成器结果
+        generator_results = None
+        if 1 <= n_c <= 5:
+            if contains_o:
+                isomers = generate_isomers_c1_c5_hetero(formula)
+            else:
+                isomers = generate_isomers_c1_c5(formula)
+        else:
+            return {"error": f"不支持的碳原子数。输入碳数: {n_c}"}
     
     # 检查是否需要结构筛选
     if structure_prefs and isinstance(isomers, list):
@@ -298,14 +496,18 @@ def parse_formula_and_dispatch(formula: str, structure_prefs: dict[str, str] = N
 class IsomerAnalyzerGUI:
     def __init__(self, master: tk.Tk) -> None:
         self.master = master
-        master.title("MolGen+ 有机分子同分异构体分析工具")
+        master.title("Isomer 有机分子同分异构体分析工具")
         master.geometry("1200x800")  # 设置默认窗口大小
         
-        self.formula_var = tk.StringVar(master, value="C3H6O2") 
+        self.formula_var = tk.StringVar(master, value="C6H14") 
         self.results_data: list[dict[str, Any]] = []
         self.image_references: list[Any] = []
         self.selected_isomers: list[int] = []  # 存储选中的异构体索引
         self.isomer_checkboxes: list[tk.Checkbutton] = []  # 存储复选框组件 
+        
+        # 线程安全控制
+        self._generation_thread: threading.Thread | None = None
+        self._generation_cancelled = False
 
         # 创建主窗口布局 - 使用PanedWindow实现左右分栏
         main_paned = tk.PanedWindow(master, orient=tk.HORIZONTAL)
@@ -333,6 +535,12 @@ class IsomerAnalyzerGUI:
         
         self.analyze_button = tk.Button(input_row1, text="分析同分异构体", command=self.analyze_isomers, bg="#4CAF50", fg="white")
         self.analyze_button.pack(side=tk.LEFT, padx=5)
+
+        # 进度标签（生成大量分子时显示进度，避免GUI卡死的假象）
+        self.progress_var = tk.StringVar(value="")
+        self.progress_label = tk.Label(input_frame, textvariable=self.progress_var,
+                                        fg="#2196F3", font=("Arial", 9, "italic"))
+        self.progress_label.pack(fill=tk.X, pady=(2, 0))
 
         # 合并分子库和快速搜索按钮
         self.library_button = tk.Button(input_row1, text="🔍 分子库搜索", command=self.open_molecule_library, bg="#2196F3", fg="white")
@@ -454,78 +662,107 @@ class IsomerAnalyzerGUI:
         self.create_molecule_display(right_panel)
         
     def create_molecule_display(self, parent):
-        """创建分子显示区域，使用更可靠的滚动实现"""
-        # 创建带滚动条的Frame
-        container = tk.Frame(parent, padx=10, pady=0)
+        """创建基于 Canvas 的虚拟滚动分子显示区域（按需渲染，释放内存）"""
+        container = tk.Frame(parent, padx=0, pady=0)
         container.pack(fill=tk.BOTH, expand=True)
-        
-        # 滚动条
-        scrollbar = tk.Scrollbar(container)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        
-        # 创建Text widget作为容器，支持滚动
-        self.molecule_text = tk.Text(container, wrap=tk.WORD, yscrollcommand=scrollbar.set, 
-                                   width=40, bg='white', padx=5, pady=5)
-        self.molecule_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar.config(command=self.molecule_text.yview)
-        
-        # 禁用编辑，但允许选择
-        self.molecule_text.config(state=tk.DISABLED)
-        
-        # 用于存储实际的分子组件
-        self.molecule_widgets = []
+
+        # Canvas + Scrollbar
+        self.mol_canvas = tk.Canvas(container, bg='white', highlightthickness=0)
+        mol_scrollbar = tk.Scrollbar(container, orient=tk.VERTICAL, command=self.mol_canvas.yview)
+        self.mol_canvas.configure(yscrollcommand=self._on_mol_canvas_yscroll)
+
+        mol_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        self.mol_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # 鼠标滚轮
+        self.mol_canvas.bind('<MouseWheel>', self._on_mol_mousewheel)
+        self.mol_canvas.bind('<Configure>', self._on_mol_canvas_resize)
+
+        # 虚拟滚动状态
+        self._mol_visible_start: int = -1
+        self._mol_visible_end: int = -1
+        self._mol_active_widgets: list[tk.Frame] = []
+        self._mol_row_height = 370  # 每个分子块预估高度
+        self.molecule_widgets = []  # 兼容旧接口
 
     def analyze_isomers(self) -> None:
+        """在后台线程中分析同分异构体，避免GUI卡死"""
+        # 防止重复点击
+        if self._generation_thread and self._generation_thread.is_alive():
+            messagebox.showinfo("提示", "正在生成中，请稍候...")
+            return
+
         formula = self.formula_var.get().strip().upper().replace(' ', '')
 
         # 获取结构偏好设置
         structure_prefs = {}
-        structure_prefs = {}
         for key, var in self.structure_vars.items():
             structure_prefs[key] = var.get()
-        
-        self.results_data = []
+
+        # ── 禁用所有控件 ──
+        self.analyze_button.config(state=tk.DISABLED, text="生成中...")
         self.export_button.config(state=tk.DISABLED)
         self.export_selected_button.config(state=tk.DISABLED)
         self.export_gjf_button.config(state=tk.DISABLED)
         self.export_xyz_button.config(state=tk.DISABLED)
-
-        # 禁用 DeepSeek AI 按钮
         if HAS_DEEPSEEK:
             self.ai_dedup_button.config(state=tk.DISABLED)
             self.ai_enhance_button.config(state=tk.DISABLED)
+        if HAS_ML_ANALYZER:
+            self.ml_quick_button.config(state=tk.DISABLED)
 
+        # 清空旧数据
+        self.results_data = []
         self.image_references.clear()
         self.selected_isomers.clear()
         self.isomer_checkboxes.clear()
         self.molecule_widgets.clear()
+        self._mol_active_widgets.clear()
+        self.mol_canvas.delete("all")
 
-        # 清空分子显示区域
-        self.molecule_text.config(state=tk.NORMAL)
-        self.molecule_text.delete(1.0, tk.END)
-        
         self.results_text.config(state=tk.NORMAL)
         self.results_text.delete(1.0, tk.END)
-        
-        # 显示分析信息
         self.results_text.insert(tk.END, f"--- 正在分析分子式: {format_formula(formula)} ---\n")
-        
-        # 如果有结构筛选，显示筛选条件
         active_filters = [f"{k}: {v}" for k, v in structure_prefs.items() if v != 'all']
         if active_filters:
             self.results_text.insert(tk.END, f"结构筛选条件: {', '.join(active_filters)}\n")
-        else:
-            self.results_text.insert(tk.END, "无结构筛选条件\n")
-        
-        self.results_text.insert(tk.END, "\n")
+        self.results_text.insert(tk.END, "请稍候，正在生成同分异构体...\n")
+        self.results_text.config(state=tk.DISABLED)
 
-        results = parse_formula_and_dispatch(formula, structure_prefs)
-        
+        self.progress_var.set("正在生成...")
+        self._generation_cancelled = False
+
+        # ── 后台线程执行重计算 ──
+        def _bg_task():
+            try:
+                results = parse_formula_and_dispatch(
+                    formula, structure_prefs,
+                    progress_callback=lambda cur, tot, msg:
+                        self.master.after(0, self._update_progress, cur, tot, msg)
+                )
+            except Exception as e:
+                results = {"error": f"生成过程出错: {str(e)}"}
+
+            # 回到主线程更新 UI
+            self.master.after(0, self._on_generation_done, results, formula, structure_prefs)
+
+        self._generation_thread = threading.Thread(target=_bg_task, daemon=True)
+        self._generation_thread.start()
+
+    def _update_progress(self, current: int, total: int, msg: str) -> None:
+        """在主线程更新进度标签（由后台线程通过 after 回调）"""
+        self.progress_var.set(f"{msg} ({current}/{total})")
+
+    def _on_generation_done(self, results, formula, structure_prefs) -> None:
+        """主线程回调：生成完成后的 UI 更新"""
+        self.progress_var.set("")
+        self.analyze_button.config(state=tk.NORMAL, text="分析同分异构体")
+
         if isinstance(results, dict) and "error" in results:
-            messagebox.showerror("错误", results["error"])
+            self.results_text.config(state=tk.NORMAL)
             self.results_text.insert(tk.END, results["error"])
         else:
-            self.results_data = results  # type: ignore
+            self.results_data = results
             self.display_results()
             if self.results_data:
                 self.export_button.config(state=tk.NORMAL)
@@ -533,24 +770,17 @@ class IsomerAnalyzerGUI:
                 self.export_gjf_button.config(state=tk.NORMAL)
                 self.export_xyz_button.config(state=tk.NORMAL)
 
-                # 启用ML分析按钮
                 if HAS_ML_ANALYZER and len(self.results_data) >= 2:
                     self.ml_quick_button.config(state=tk.NORMAL)
 
-                # 启用 DeepSeek AI 按钮
                 if HAS_DEEPSEEK:
                     self.ai_dedup_button.config(state=tk.NORMAL)
                     self.ai_enhance_button.config(state=tk.NORMAL)
 
-
-                # 显示筛选统计信息
                 self._display_filter_statistics()
-
-                # 显示烷烃理论统计信息（如果适用）
                 self._display_alkane_statistics(formula)
-        
+
         self.results_text.config(state=tk.DISABLED)
-        self.molecule_text.config(state=tk.DISABLED)
         self.update_selection_label()
     
     def open_molecule_library(self) -> None:
@@ -873,83 +1103,166 @@ class IsomerAnalyzerGUI:
             self.draw_all_molecules()
 
     def draw_all_molecules(self) -> None:
-        # 清空之前的分子显示
-        self.molecule_widgets.clear()
-        self.molecule_text.config(state=tk.NORMAL)
-        self.molecule_text.delete(1.0, tk.END)
-        
+        """初始化虚拟滚动：设置滚动区域高度，渲染当前可见分子"""
+        self._mol_active_widgets.clear()
+        self._mol_visible_start = -1
+        self._mol_visible_end = -1
+
+        total_count = len(self.results_data)
+        total_height = total_count * self._mol_row_height
+
+        # 设置 Canvas 滚动区域
+        canvas_width = self.mol_canvas.winfo_width()
+        if canvas_width <= 1:
+            canvas_width = 400
+        self._mol_canvas_width = canvas_width
+        self.mol_canvas.configure(scrollregion=(0, 0, canvas_width, total_height))
+
         if not HAS_DRAWING:
-            self.molecule_text.insert(tk.END, "警告: 请安装 Pillow 库以显示分子图形\n")
-            self.molecule_text.config(state=tk.DISABLED)
+            self.mol_canvas.create_text(
+                canvas_width // 2, 50,
+                text="请安装 Pillow 库以显示分子图形",
+                fill="gray", font=('Arial', 10)
+            )
             return
-        
-        # 创建主框架来包含所有分子
-        main_frame = tk.Frame(self.molecule_text, bg='white')
-        
-        for i, item in enumerate(self.results_data):
-            mol = item.get('Mol')
-            smiles = item.get('SMILES', '')
-            
-            # 为每个异构体创建一个框架
-            isomer_frame = tk.Frame(main_frame, bg='white', relief=tk.RIDGE, bd=2)
-            isomer_frame.pack(pady=10, padx=5, fill=tk.X)
-            
-            # 添加复选框和标题
-            header_frame = tk.Frame(isomer_frame, bg='white')
-            header_frame.pack(fill=tk.X, padx=5, pady=5)
-            
-            var = tk.BooleanVar(value=False)
-            checkbox = tk.Checkbutton(header_frame, text=f"异构体 {i+1}", 
-                                     variable=var, 
-                                     command=lambda idx=i, v=var: self.toggle_isomer_selection(idx, v))
-            checkbox.pack(side=tk.LEFT)
-            checkbox.variable = var  # 保存变量引用
-            self.isomer_checkboxes.append(checkbox)
-            
-            # 分子信息
-            info_text = f"{item.get('StructureType', '')}"
-            info_label = tk.Label(header_frame, text=info_text, font=('Arial', 9, 'italic'), bg='white')
-            info_label.pack(side=tk.LEFT, padx=(10, 0))
-            
-            # SMILES 标签
-            smiles_label = tk.Label(isomer_frame, text=f"SMILES: {smiles}", 
-                                   font=('Arial', 8), bg='white', fg='blue')
-            smiles_label.pack(anchor=tk.W, padx=5, pady=5)
-            
-            # 分子图像
-            if mol:
-                try:
-                    pil_img = MolToImage(mol, size=(280, 280))
-                    tk_img = ImageTk.PhotoImage(pil_img)  # type: ignore
-                    self.image_references.append(tk_img) 
-                    
-                    image_label = tk.Label(isomer_frame, image=tk_img, bg='white')
-                    image_label.pack(pady=5)
-                    
-                except Exception as e:
-                    msg = str(e)
-                    if 'Cairo' in msg or 'MolToImage requires' in msg:
-                        hint = "请安装: conda install -c conda-forge rdkit pillow"
-                        error_text = f"绘图失败: RDKit 未启用 Cairo 支持\n{hint}"
-                    else:
-                        error_text = f"绘图错误: {e}"
-                    
-                    error_label = tk.Label(isomer_frame, text=error_text, 
-                                         fg="red", bg='white', font=('Arial', 8), 
-                                         justify=tk.LEFT, wraplength=280)
-                    error_label.pack(pady=10)
-                    print(f"异构体 #{i+1} 绘图失败: {e}", file=sys.stderr)
-            else:
-                no_img_label = tk.Label(isomer_frame, text="无法生成分子图像", 
-                                       fg="gray", bg='white', font=('Arial', 9))
-                no_img_label.pack(pady=10)
-        
-        # 将主框架添加到Text widget
-        self.molecule_text.window_create(tk.END, window=main_frame)
-        self.molecule_text.config(state=tk.DISABLED)
-        
-        # 滚动到顶部
-        self.molecule_text.see(tk.END)
+
+        if total_count == 0:
+            self.mol_canvas.create_text(
+                canvas_width // 2, 50,
+                text="无分子可显示",
+                fill="gray", font=('Arial', 10)
+            )
+            return
+
+        # 渲染首屏可见分子
+        self._refresh_visible_molecules()
+
+    # ── 虚拟滚动核心方法 ──
+
+    def _on_mol_canvas_yscroll(self, *args):
+        """Canvas 滚动时同步滚动条并刷新可见分子"""
+        scrollbar = self.mol_canvas.master.children.get('!scrollbar')
+        if scrollbar:
+            scrollbar.set(*args)
+        self.mol_canvas.yview_moveto(args[0])
+        self._refresh_visible_molecules()
+
+    def _on_mol_mousewheel(self, event):
+        """鼠标滚轮滚动"""
+        self.mol_canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+        self._refresh_visible_molecules()
+
+    def _on_mol_canvas_resize(self, event):
+        """Canvas 大小变化时刷新滚动区域宽度和可见分子"""
+        self._mol_canvas_width = event.width
+        total_height = len(self.results_data) * self._mol_row_height
+        self.mol_canvas.configure(scrollregion=(0, 0, event.width, total_height))
+        self._refresh_visible_molecules()
+
+    def _refresh_visible_molecules(self):
+        """根据当前滚动位置，只渲染可视区域内的分子，释放旧组件"""
+        total = len(self.results_data)
+        if total == 0:
+            return
+
+        canvas_height = self.mol_canvas.winfo_height()
+        if canvas_height <= 1:
+            self.master.after(100, self._refresh_visible_molecules)
+            return
+
+        # 计算可视范围
+        y_top = self.mol_canvas.canvasy(0)
+        y_bottom = y_top + canvas_height
+        buffer_rows = 2  # 上下各多渲染2行防止滚动闪烁
+
+        start_idx = max(0, int(y_top / self._mol_row_height) - buffer_rows)
+        end_idx = min(total, int(y_bottom / self._mol_row_height) + buffer_rows + 1)
+
+        # 如果范围没变则跳过
+        if start_idx == self._mol_visible_start and end_idx == self._mol_visible_end:
+            return
+
+        # 销毁旧组件释放内存（Tkinter 组件 + PhotoImage）
+        for w in self._mol_active_widgets:
+            w.destroy()
+        self._mol_active_widgets.clear()
+        self.image_references.clear()
+        self.isomer_checkboxes.clear()
+
+        # 渲染新范围
+        for i in range(start_idx, end_idx):
+            self._render_molecule_widget(i)
+
+        self._mol_visible_start = start_idx
+        self._mol_visible_end = end_idx
+
+    def _render_molecule_widget(self, index: int):
+        """在 Canvas 中渲染单个分子组件"""
+        item = self.results_data[index]
+        y_pos = index * self._mol_row_height
+        width = max(self._mol_canvas_width - 10, 200)
+
+        # 外层框架
+        frame = tk.Frame(self.mol_canvas, bg='white', relief=tk.RIDGE, bd=2)
+
+        # 标题行：复选框 + 结构类型
+        header = tk.Frame(frame, bg='white')
+        header.pack(fill=tk.X, padx=5, pady=(5, 0))
+
+        var = tk.BooleanVar(value=(index in self.selected_isomers))
+        cb = tk.Checkbutton(header, text=f"异构体 {index + 1}",
+                            variable=var,
+                            command=lambda idx=index, v=var: self.toggle_isomer_selection(idx, v))
+        cb.pack(side=tk.LEFT)
+        cb.variable = var
+        self.isomer_checkboxes.append(cb)
+
+        info_text = item.get('StructureType', '')
+        if info_text:
+            tk.Label(header, text=info_text, font=('Arial', 9, 'italic'),
+                    bg='white').pack(side=tk.LEFT, padx=(10, 0))
+
+        # SMILES 文本
+        smiles = item.get('SMILES', '')
+        tk.Label(frame, text=f"SMILES: {smiles}",
+                font=('Arial', 8), bg='white', fg='blue').pack(anchor=tk.W, padx=5, pady=2)
+
+        # 分子图像
+        mol = item.get('Mol')
+        if mol:
+            try:
+                pil_img = MolToImage(mol, size=(280, 280))
+                tk_img = ImageTk.PhotoImage(pil_img)
+                self.image_references.append(tk_img)
+                tk.Label(frame, image=tk_img, bg='white').pack(pady=(2, 5))
+            except Exception:
+                tk.Label(frame, text="绘图失败", fg="red", bg='white').pack(pady=10)
+        else:
+            tk.Label(frame, text="无法生成分子图像",
+                    fg="gray", bg='white', font=('Arial', 9)).pack(pady=10)
+
+        # 放置在 Canvas 中
+        self.mol_canvas.create_window((5, y_pos), window=frame, anchor='nw', width=width)
+        self._mol_active_widgets.append(frame)
+
+        # 更新 _mol_row_height 为实际高度（首次渲染后校准）
+        self.master.after(10, self._calibrate_row_height, index, y_pos)
+
+    def _calibrate_row_height(self, index, y_pos):
+        """校准行高：用第一个实际渲染的分子高度更新滚动区域"""
+        if self._mol_active_widgets and index == self._mol_visible_start:
+            widget = self._mol_active_widgets[0]
+            try:
+                actual_h = widget.winfo_reqheight()
+                if actual_h > 100 and abs(actual_h - self._mol_row_height) > 50:
+                    self._mol_row_height = actual_h + 20
+                    total_h = len(self.results_data) * self._mol_row_height
+                    self.mol_canvas.configure(
+                        scrollregion=(0, 0, self._mol_canvas_width, total_h)
+                    )
+                    self._refresh_visible_molecules()
+            except Exception:
+                pass
 
     def toggle_isomer_selection(self, index: int, var: tk.BooleanVar) -> None:
         """切换异构体选择状态"""
@@ -1003,7 +1316,7 @@ class IsomerAnalyzerGUI:
         
         try:
             with open(file_path, 'w', encoding='utf-8') as f:
-                f.write(f"*** MolGen+ 选中的同分异构体分析结果 ***\n")
+                f.write(f"*** Isomer 选中的同分异构体分析结果 ***\n")
                 f.write(f"分子式: {format_formula(self.formula_var.get())}\n")
                 f.write(f"文件名: {os.path.basename(file_path)}\n")
                 f.write(f"生成时间: {tk.Tcl().eval('clock format [clock seconds]')}\n")
@@ -1713,7 +2026,7 @@ class IsomerAnalyzerGUI:
         
         try:
             with open(file_path, 'w', encoding='utf-8') as f:
-                f.write(f"*** MolGen+ 简易同分异构体分析结果 ***\n")
+                f.write(f"*** Isomer 简易同分异构体分析结果 ***\n")
                 f.write(f"分子式: {format_formula(self.formula_var.get())}\n")
                 f.write(f"文件名: {os.path.basename(file_path)}\n")
                 f.write(f"生成时间: {tk.Tcl().eval('clock format [clock seconds]')}\n")

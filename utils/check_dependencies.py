@@ -34,7 +34,7 @@ def check_dependency(package_name, description):
 def check_dependencies():
     """检查所有依赖包"""
     print("=" * 70)
-    print("MolGenPlus 项目依赖检查")
+    print("Isomer 项目依赖检查")
     print("=" * 70)
     print()
 

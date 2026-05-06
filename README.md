@@ -205,7 +205,7 @@ pip install openai pillow scikit-learn numpy pandas matplotlib
 **方式一：命令行运行**
 
 ```bash
-python MolGenPlus_Main.py
+python Isomer_Main.py
 ```
 
 **方式二：使用启动脚本（Windows）**
@@ -257,7 +257,7 @@ cmd /k run_molgen.bat
 
 ```
 Isomer/
-├── MolGenPlus_Main.py          # 主程序入口（GUI 应用）
+├── Isomer_Main.py          # 主程序入口（GUI 应用）
 ├── run_molgen.bat             # Windows 启动脚本
 │
 ├── analysis/                  # 分析模块

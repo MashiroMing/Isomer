@@ -40,4 +40,10 @@ Thumbs.db
 # Backup and offline files
 *.bak
 *.backup
+database_backups/
 README_offline.md
+
+# PyInstaller builds
+build/
+dist/
+*.spec

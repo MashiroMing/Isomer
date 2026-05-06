@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "created_date": "2026-02-09T10:28:06.677371",
-  "last_updated": "2026-02-19T15:57:18.690910",
+  "last_updated": "2026-04-28T23:26:58.235124",
   "categories": {
     "user_added": [],
     "predefined": [
@@ -1372,9 +1372,713 @@
           "source": "deepseek",
           "verified_by_ai": true
         }
+      },
+      {
+        "id": "mol_20260428_224948_21_0",
+        "name": "C7H8_异构体_22",
+        "smiles": "C=CC=CC#CC",
+        "formula": "C7H8",
+        "molecular_weight": 92.062600256,
+        "carbon_count": 7,
+        "hydrogen_count": 8,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H8异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H8"
+        ],
+        "created_date": "2026-04-28T22:49:48.724983",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_224948_22_1",
+        "name": "C7H8_异构体_23",
+        "smiles": "C=CC1=CC=CC1",
+        "formula": "C7H8",
+        "molecular_weight": 92.062600256,
+        "carbon_count": 7,
+        "hydrogen_count": 8,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H8异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H8"
+        ],
+        "created_date": "2026-04-28T22:49:48.724983",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_23_0",
+        "name": "C7H10_异构体_24",
+        "smiles": "C=CC=C=CCC",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.547468",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_24_1",
+        "name": "C7H10_异构体_25",
+        "smiles": "C#CCC=CCC",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.549475",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_25_2",
+        "name": "C7H10_异构体_26",
+        "smiles": "C=CC=C(C)C=C",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.549475",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_26_3",
+        "name": "C7H10_异构体_27",
+        "smiles": "C1=CC(C)=C(C)C1",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.549475",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_27_4",
+        "name": "C7H10_异构体_28",
+        "smiles": "C1CC1C=C=CC",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.549475",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_28_5",
+        "name": "C7H10_异构体_29",
+        "smiles": "C1C=CC(C)C=C1",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.549475",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_29_6",
+        "name": "C7H10_异构体_30",
+        "smiles": "C1C=C(C)CC=C1",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.549475",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_30_7",
+        "name": "C7H10_异构体_31",
+        "smiles": "C1CC(C=C)C=C1",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.550498",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_31_8",
+        "name": "C7H10_异构体_32",
+        "smiles": "C1CC=CC(C)=C1",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.550498",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_32_9",
+        "name": "C7H10_异构体_33",
+        "smiles": "C1=C(C)CCC=C1",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.550498",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_33_10",
+        "name": "C7H10_异构体_34",
+        "smiles": "C1=CC(C)CC=C1",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.550498",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_230101_34_11",
+        "name": "C7H10_异构体_35",
+        "smiles": "C1=CCC(C=C)C1",
+        "formula": "C7H10",
+        "molecular_weight": 94.07825032,
+        "carbon_count": 7,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C7H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C7H10"
+        ],
+        "created_date": "2026-04-28T23:01:01.550498",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_35_0",
+        "name": "C9H16_异构体_36",
+        "smiles": "C1CCCCCCC=C1",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.793769",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_36_1",
+        "name": "C9H16_异构体_37",
+        "smiles": "C1CC1CCCCC=C",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.793769",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_37_2",
+        "name": "C9H16_异构体_38",
+        "smiles": "C1CC(CCCC=C)C1",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.793769",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_38_3",
+        "name": "C9H16_异构体_39",
+        "smiles": "C1CCCC(CC=C)C1",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.793769",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_39_4",
+        "name": "C9H16_异构体_40",
+        "smiles": "C1CCCC=CC(C)C1",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.793769",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_40_5",
+        "name": "C9H16_异构体_41",
+        "smiles": "C1CC(C=CCC)CC1",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.794765",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_41_6",
+        "name": "C9H16_异构体_42",
+        "smiles": "CC=CCCC(C)C=C",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.794765",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_42_7",
+        "name": "C9H16_异构体_43",
+        "smiles": "C1CC(C)CC=CCC1",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.794765",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_43_8",
+        "name": "C9H16_异构体_44",
+        "smiles": "C1C=C(CCCC)CC1",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.794765",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_44_9",
+        "name": "C9H16_异构体_45",
+        "smiles": "C=CCCC=CC(C)C",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.794765",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_45_10",
+        "name": "C9H16_异构体_46",
+        "smiles": "CCCCCC=CC=C",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.794765",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_46_11",
+        "name": "C9H16_异构体_47",
+        "smiles": "CCCC=CC=CCC",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.794765",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_47_12",
+        "name": "C9H16_异构体_48",
+        "smiles": "CC=CCCC=CCC",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.794765",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_48_13",
+        "name": "C9H16_异构体_49",
+        "smiles": "CCCC=CC=C(C)C",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.794765",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_231147_49_14",
+        "name": "C9H16_异构体_50",
+        "smiles": "CC1CCCCC1C=C",
+        "formula": "C9H16",
+        "molecular_weight": 124.12520051199999,
+        "carbon_count": 9,
+        "hydrogen_count": 16,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H16异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H16"
+        ],
+        "created_date": "2026-04-28T23:11:47.794765",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_232658_50_0",
+        "name": "C9H10_异构体_51",
+        "smiles": "C=CC1=CC=CC=C1C",
+        "formula": "C9H10",
+        "molecular_weight": 118.07825032,
+        "carbon_count": 9,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H10"
+        ],
+        "created_date": "2026-04-28T23:26:58.233140",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_232658_51_1",
+        "name": "C9H10_异构体_52",
+        "smiles": "C1=CC=C(C2CC2)C=C1",
+        "formula": "C9H10",
+        "molecular_weight": 118.07825032,
+        "carbon_count": 9,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H10"
+        ],
+        "created_date": "2026-04-28T23:26:58.235124",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
+      },
+      {
+        "id": "mol_20260428_232658_52_2",
+        "name": "C9H10_异构体_53",
+        "smiles": "C1=CC2C=CC=CC2C1",
+        "formula": "C9H10",
+        "molecular_weight": 118.07825032,
+        "carbon_count": 9,
+        "hydrogen_count": 10,
+        "oxygen_count": 0,
+        "description": "由 deepseek AI 生成的C9H10异构体",
+        "category": "ai_generated",
+        "tags": [
+          "ai_generated",
+          "deepseek",
+          "C9H10"
+        ],
+        "created_date": "2026-04-28T23:26:58.235124",
+        "custom_properties": {
+          "source": "deepseek",
+          "verified_by_ai": true
+        }
       }
     ],
     "ai_verified": []
   },
-  "total_count": 71
+  "total_count": 103
 }

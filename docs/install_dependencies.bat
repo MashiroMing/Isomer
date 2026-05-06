@@ -1,8 +1,8 @@
 @echo off
-REM Install dependencies for MolGenPlus Project
+REM Install dependencies for Isomer Project
 
 echo ========================================
-echo MolGenPlus 依赖安装工具
+echo Isomer 依赖安装工具
 echo ========================================
 echo.
 
